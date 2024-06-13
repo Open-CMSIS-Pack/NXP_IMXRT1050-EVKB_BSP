@@ -1,0 +1,58 @@
+name: Build - Examples
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - .github/workflows/examples.yml
+      - 'CMSIS/**'
+      - 'Examples/**'
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  Build:
+    strategy:
+      fail-fast: false
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout NXP_IMXRT1050-EVKB_BSP
+        uses: actions/checkout@v4
+        with:
+          path: ./nxp_imxrt1050-evkb_bsp
+
+      - name: Prepare vcpkg env
+        uses: ARM-software/cmsis-actions/vcpkg@main
+        with:
+          config: ./nxp_imxrt1050-evkb_bsp/Examples/Blinky/vcpkg-configuration.json
+
+      - name: Initialize CMSIS pack root folder
+        run: |
+          cpackget init https://www.keil.com/pack/index.pidx
+          cpackget update-index
+
+      - name: Add local CMSIS packs
+        working-directory:
+        run: |
+          cpackget add ./nxp_imxrt1050-evkb_bsp/Keil.IMXRT1050-EVKB_BSP.pdsc
+
+      - name: Activate Arm tool license
+        run: |
+          armlm activate --server https://mdk-preview.keil.arm.com --product KEMDK-COM0
+
+      - uses: ammaraskar/gcc-problem-matcher@master
+
+      - name: Build Blinky
+        working-directory: ./nxp_imxrt1050-evkb_bsp/Examples/Blinky
+        run: |
+          cbuild ./Blinky.csolution.yml --packs --update-rte
+
+      - name: Deactivate Arm tool license
+        if: always()
+        run: |
+          armlm deactivate --product KEMDK-COM0
