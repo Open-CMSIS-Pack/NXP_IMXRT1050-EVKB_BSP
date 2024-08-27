@@ -6,8 +6,8 @@ solution:
 
   # List the packs that define the device and/or board.
   packs:
-    - pack: NXP::MIMXRT1052_DFP@>=18.0.0
-    - pack: NXP::EVKB-IMXRT1050_BSP@>=18.0.0
+    - pack: NXP::MIMXRT1052_DFP@18.0.0
+    - pack: NXP::EVKB-IMXRT1050_BSP@18.0.0
     - pack: Keil::IMXRT1050-EVKB_BSP@>=2.0.0-0
     - pack: ARM::CMSIS@>=6.1.0
     - pack: ARM::CMSIS-RTX@>=5.9.0
