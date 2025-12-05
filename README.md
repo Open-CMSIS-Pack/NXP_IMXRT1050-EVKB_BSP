@@ -1,4 +1,9 @@
-[![Version](https://img.shields.io/github/v/release/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP)](https://github.com/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/releases/latest)
+[![Latest release](https://img.shields.io/github/v/release/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP?label=Latest%20release)](https://github.com/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/releases/latest)
+[![Latest tag](https://img.shields.io/github/v/tag/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP?label=Latest%20tag)](https://github.com/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/tags)
+[![License](https://img.shields.io/github/license/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP?label=License)](https://github.com/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/blob/main/LICENSE)
+[![Build examples](https://img.shields.io/github/actions/workflow/status/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/examples.yml?logo=arm&logoColor=0091bd&label=Build%20examples)](/.github/workflows/examples.yml)
+[![Build pack](https://img.shields.io/github/actions/workflow/status/Open-CMSIS-Pack/NXP_IMXRT1050-EVKB_BSP/pack.yml?logo=arm&logoColor=0091bd&label=Build%20pack)](/.github/workflows/pack.yml)
+
 
 # NXP_IMXRT1050-EVKB_BSP
 
