@@ -7,6 +7,10 @@
 
 # NXP_IMXRT1050-EVKB_BSP
 
+This repository is **DEPRECATED**!
+
+Development and maintenance of drivers for these devices are no longer provided here. Users requiring drivers for these devices should refer to NXP.
+
 This is the development repository for the **NXP IMXRT1050-EVKB Board Support Pack (BSP)** - a CMSIS software pack that is designed to work with all compiler toolchains (Arm Compiler, GCC, IAR, LLVM). It is released as [CMSIS software pack](https://www.keil.arm.com/packs/imxrt1050-evkb_bsp-keil) and therefore accessible by CMSIS-Pack enabled software development tools.
 
 > **Note:** This is currently Work in Progress. Final release is expected in Q3'2024.

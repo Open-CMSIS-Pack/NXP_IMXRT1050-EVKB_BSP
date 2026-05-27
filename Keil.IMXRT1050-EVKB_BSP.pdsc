@@ -14,6 +14,8 @@
 
   <releases>
     <release version="2.0.0-dev">
+    <!-- <release version="2.0.0" date="xxxx-xx-xx" deprecated="xxxx-xx-xx"> -->
+      This Software Pack is no longer maintained.
       Synchronize with NXP MIMXRT1052_DFP 18.0.0 and NXP EVKB-IMXRT1050_BSP 18.0.0
       Pack Description:
       - Update schemaVersion (1.7.36)
