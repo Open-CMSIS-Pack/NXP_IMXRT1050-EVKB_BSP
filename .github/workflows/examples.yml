@@ -22,7 +22,7 @@ jobs:
 
     steps:
       - name: Checkout NXP_IMXRT1050-EVKB_BSP
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: ./nxp_imxrt1050-evkb_bsp
 
