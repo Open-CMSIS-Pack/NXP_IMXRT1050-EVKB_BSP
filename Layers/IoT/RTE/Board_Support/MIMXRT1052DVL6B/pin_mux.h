@@ -612,6 +612,7 @@ void BOARD_InitCANPins(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITENETPINS_ENET_INT_GPIO                                   GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITENETPINS_ENET_INT_INIT_GPIO_VALUE                           1U   /*!< GPIO output initial state */
 #define BOARD_INITENETPINS_ENET_INT_GPIO_PIN                                 10U   /*!< GPIO pin number */
 #define BOARD_INITENETPINS_ENET_INT_GPIO_PIN_MASK                    (1U << 10U)   /*!< GPIO pin mask */
 #define BOARD_INITENETPINS_ENET_INT_PORT                                   GPIO1   /*!< PORT peripheral base pointer */
@@ -658,6 +659,26 @@ void BOARD_InitENETPins(void);
 /* Routed pin properties */
 #define BOARD_INITUSDHCPINS_SD1_CLK_PERIPHERAL                            USDHC1   /*!< Peripheral name */
 #define BOARD_INITUSDHCPINS_SD1_CLK_SIGNAL                             usdhc_clk   /*!< Signal name */
+
+/* GPIO_B1_14 (coord C14), SD0_VSELECT */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD0_VSELECT_PERIPHERAL                        USDHC1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD0_VSELECT_SIGNAL                     usdhc_vselect   /*!< Signal name */
+
+/* GPIO_AD_B0_05 (coord G14), CAN_STBY/BOOT_MODE[1]/Flash_RST/U12[8] */
+/* Routed pin properties */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_PERIPHERAL                           GPIO1   /*!< Peripheral name */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_SIGNAL                             gpio_io   /*!< Signal name */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_CHANNEL                                 5U   /*!< Signal channel */
+
+/* Symbols to be used with GPIO driver */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_GPIO                                 GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_INIT_GPIO_VALUE                         0U   /*!< GPIO output initial state */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_GPIO_PIN                                5U   /*!< GPIO pin number */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_GPIO_PIN_MASK                   (1U << 5U)   /*!< GPIO pin mask */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_PORT                                 GPIO1   /*!< PORT peripheral base pointer */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_PIN                                     5U   /*!< PORT pin number */
+#define BOARD_INITUSDHCPINS_SD1_PWREN_PIN_MASK                        (1U << 5U)   /*!< PORT pin mask */
 
 
 /*!
@@ -758,6 +779,7 @@ void BOARD_InitARDUINO_UART(void);
 
 /* Symbols to be used with GPIO driver */
 #define BOARD_INITUSER_LED_USER_LED_GPIO                                   GPIO1   /*!< GPIO peripheral base pointer */
+#define BOARD_INITUSER_LED_USER_LED_INIT_GPIO_VALUE                           1U   /*!< GPIO output initial state */
 #define BOARD_INITUSER_LED_USER_LED_GPIO_PIN                                  9U   /*!< GPIO pin number */
 #define BOARD_INITUSER_LED_USER_LED_GPIO_PIN_MASK                     (1U << 9U)   /*!< GPIO pin mask */
 #define BOARD_INITUSER_LED_USER_LED_PORT                                   GPIO1   /*!< PORT peripheral base pointer */

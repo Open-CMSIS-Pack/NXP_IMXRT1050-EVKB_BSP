@@ -6,12 +6,13 @@
 /*
  * TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Pins v15.0
+product: Pins v17.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 15.0.1
+processor_version: 26.09.10
 board: IMXRT1050-EVKB
+external_user_signals: {}
 pin_labels:
 - {pin_num: E3, pin_signal: GPIO_EMC_00, label: SEMC_D0, identifier: SEMC_D0}
 - {pin_num: F3, pin_signal: GPIO_EMC_01, label: SEMC_D1, identifier: SEMC_D1}
@@ -95,7 +96,7 @@ pin_labels:
 - {pin_num: M11, pin_signal: GPIO_AD_B0_02, label: 'USB_OTG1_PWR/J24[2]'}
 - {pin_num: G11, pin_signal: GPIO_AD_B0_03, label: 'USB_OTG1_OC/J24[1]'}
 - {pin_num: F11, pin_signal: GPIO_AD_B0_04, label: 'CSI_PWDN/J35[17]/BOOT_MODE[0]', identifier: CSI_PWDN}
-- {pin_num: G14, pin_signal: GPIO_AD_B0_05, label: 'CAN_STBY/BOOT_MODE[1]/Flash_RST/U12[8]', identifier: CAN_STBY}
+- {pin_num: G14, pin_signal: GPIO_AD_B0_05, label: 'CAN_STBY/BOOT_MODE[1]/Flash_RST/U12[8]', identifier: CAN_STBY;SD_PWREN;SD1_PWREN}
 - {pin_num: E14, pin_signal: GPIO_AD_B0_06, label: 'JTAG_TMS/J21[7]/SWD_DIO'}
 - {pin_num: F12, pin_signal: GPIO_AD_B0_07, label: 'JTAG_TCK/J21[9]/SWD_CLK'}
 - {pin_num: F13, pin_signal: GPIO_AD_B0_08, label: JTAG_MOD}
@@ -682,16 +683,18 @@ BOARD_InitUSDHCPins:
 - options: {callFromInitBoot: 'true', coreID: core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: J2, peripheral: USDHC1, signal: 'usdhc_data, 3', pin_signal: GPIO_SD_B0_05, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, pull_keeper_enable: Enable,
-    speed: MHZ_200, drive_strength: R0, slew_rate: Fast}
+    speed: MHZ_200, drive_strength: R0_6, slew_rate: Fast}
   - {pin_num: H2, peripheral: USDHC1, signal: 'usdhc_data, 2', pin_signal: GPIO_SD_B0_04, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, speed: MHZ_200,
-    drive_strength: R0, slew_rate: Fast}
+    drive_strength: R0_6, slew_rate: Fast}
   - {pin_num: K1, peripheral: USDHC1, signal: 'usdhc_data, 1', pin_signal: GPIO_SD_B0_03, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, speed: MHZ_200,
-    drive_strength: R0, slew_rate: Fast}
+    drive_strength: R0_6, slew_rate: Fast}
   - {pin_num: J1, peripheral: USDHC1, signal: 'usdhc_data, 0', pin_signal: GPIO_SD_B0_02, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, speed: MHZ_200,
-    drive_strength: R0, slew_rate: Fast}
+    drive_strength: R0_6, slew_rate: Fast}
   - {pin_num: J4, peripheral: USDHC1, signal: usdhc_cmd, pin_signal: GPIO_SD_B0_00, pull_up_down_config: Pull_Up_47K_Ohm, pull_keeper_select: Pull, speed: MHZ_200,
-    drive_strength: R0, slew_rate: Fast}
-  - {pin_num: J3, peripheral: USDHC1, signal: usdhc_clk, pin_signal: GPIO_SD_B0_01, pull_keeper_enable: Disable, speed: MHZ_200, drive_strength: R0, slew_rate: Fast}
+    drive_strength: R0_6, slew_rate: Fast}
+  - {pin_num: J3, peripheral: USDHC1, signal: usdhc_clk, pin_signal: GPIO_SD_B0_01, pull_keeper_enable: Disable, speed: MHZ_200, drive_strength: R0_6, slew_rate: Fast}
+  - {pin_num: C14, peripheral: USDHC1, signal: usdhc_vselect, pin_signal: GPIO_B1_14}
+  - {pin_num: G14, peripheral: GPIO1, signal: 'gpio_io, 05', pin_signal: GPIO_AD_B0_05, identifier: SD1_PWREN, direction: OUTPUT}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 
@@ -704,18 +707,30 @@ BOARD_InitUSDHCPins:
 void BOARD_InitUSDHCPins(void) {
   CLOCK_EnableClock(kCLOCK_Iomuxc);           
 
+  /* GPIO configuration of SD1_PWREN on GPIO_AD_B0_05 (pin G14) */
+  gpio_pin_config_t SD1_PWREN_config = {
+      .direction = kGPIO_DigitalOutput,
+      .outputLogic = 0U,
+      .interruptMode = kGPIO_NoIntmode
+  };
+  /* Initialize GPIO functionality on GPIO_AD_B0_05 (pin G14) */
+  GPIO_PinInit(GPIO1, 5U, &SD1_PWREN_config);
+
+  IOMUXC_SetPinMux(IOMUXC_GPIO_AD_B0_05_GPIO1_IO05, 0U); 
+  IOMUXC_SetPinMux(IOMUXC_GPIO_B1_14_USDHC1_VSELECT, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_00_USDHC1_CMD, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_01_USDHC1_CLK, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_02_USDHC1_DATA0, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_03_USDHC1_DATA1, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_04_USDHC1_DATA2, 0U); 
   IOMUXC_SetPinMux(IOMUXC_GPIO_SD_B0_05_USDHC1_DATA3, 0U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_00_USDHC1_CMD, 0x70C9U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_01_USDHC1_CLK, 0xC9U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_02_USDHC1_DATA0, 0x70C9U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_03_USDHC1_DATA1, 0x70C9U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_04_USDHC1_DATA2, 0x70C9U); 
-  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_05_USDHC1_DATA3, 0x70C9U); 
+
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_00_USDHC1_CMD, 0x70F1U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_01_USDHC1_CLK, 0xF1U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_02_USDHC1_DATA0, 0x70F1U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_03_USDHC1_DATA1, 0x70F1U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_04_USDHC1_DATA2, 0x70F1U); 
+  IOMUXC_SetPinConfig(IOMUXC_GPIO_SD_B0_05_USDHC1_DATA3, 0x70F1U); 
 }
 
 /*

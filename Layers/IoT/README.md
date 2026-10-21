@@ -24,7 +24,7 @@ The example project can be re-configured to work on custom hardware. Refer to ["
 | AHB_CLK_ROOT            | 600 MHz
 | IPG_CLK_ROOT            | 150 MHz
 | PERCLK_CLK_ROOT         |  75 MHz
-| USDHC1_CLK_ROOT         | 163 MHz
+| USDHC1_CLK_ROOT         | 198 MHz
 | UART_CLK_ROOT           |  80 MHz
 | ENET_125M_CLK           |  50 MHz
 | ENET_25M_REF_CLK        |  25 MHz
@@ -49,12 +49,12 @@ The example project can be re-configured to work on custom hardware. Refer to ["
 | BOARD_InitENET         | A12 | ENET       | TX_DATA, 1  | ENET_TXD1   | default                                             | Ethernet KSZ8081RNB pin TXD1 (GPIO_B1_08)
 | BOARD_InitENET         | A13 | ENET       | TX_EN       | ENET_TXEN   | default                                             | Ethernet KSZ8081RNB pin TXEN (GPIO_B1_09)
 | BOARD_InitENET         | G13 | GPIO1      | gpio_io, 10 | ENET_INT    | Direction Output, GPIO initial state 1              | Ethernet KSZ8081RNB pin INTRP (GPIO_AD_B0_10)
-| BOARD_InitUSDHC        | J2  | USDHC1     | DATA, 3     | SD1_D3      | default                                             | SD Card pin D3 (GPIO_SD_B0_05)
-| BOARD_InitUSDHC        | H2  | USDHC1     | DATA, 2     | SD1_D2      | default                                             | SD Card pin D2 (GPIO_SD_B0_04)
-| BOARD_InitUSDHC        | K1  | USDHC1     | DATA, 1     | SD1_D1      | default                                             | SD Card pin D1 (GPIO_SD_B0_03)
-| BOARD_InitUSDHC        | J1  | USDHC1     | DATA, 0     | SD1_D0      | default                                             | SD Card pin D0 (GPIO_SD_B0_02)
-| BOARD_InitUSDHC        | J4  | USDHC1     | CMD         | SD1_CMD     | default                                             | SD Card pin CMD (GPIO_SD_B0_00)
-| BOARD_InitUSDHC        | J3  | USDHC1     | CLK         | SD1_CLK     | default                                             | SD Card pin CLK (GPIO_SD_B0_01)
+| BOARD_InitUSDHC        | J2  | USDHC1     | DATA, 3     | SD1_D3      | DSE4, fast slew, 200 MHz pad speed, 47k pull-up     | SD Card pin D3 (GPIO_SD_B0_05)
+| BOARD_InitUSDHC        | H2  | USDHC1     | DATA, 2     | SD1_D2      | DSE4, fast slew, 200 MHz pad speed, 47k pull-up     | SD Card pin D2 (GPIO_SD_B0_04)
+| BOARD_InitUSDHC        | K1  | USDHC1     | DATA, 1     | SD1_D1      | DSE4, fast slew, 200 MHz pad speed, 47k pull-up     | SD Card pin D1 (GPIO_SD_B0_03)
+| BOARD_InitUSDHC        | J1  | USDHC1     | DATA, 0     | SD1_D0      | DSE4, fast slew, 200 MHz pad speed, 47k pull-up     | SD Card pin D0 (GPIO_SD_B0_02)
+| BOARD_InitUSDHC        | J4  | USDHC1     | CMD         | SD1_CMD     | DSE4, fast slew, 200 MHz pad speed, 47k pull-up     | SD Card pin CMD (GPIO_SD_B0_00)
+| BOARD_InitUSDHC        | J3  | USDHC1     | CLK         | SD1_CLK     | DSE4, fast slew, 200 MHz pad speed, no pull         | SD Card pin CLK (GPIO_SD_B0_01)
 | BOARD_InitARDUINO_UART | J12 | LPUART3    | TX          | LPUART3_TX  | default                                             | Arduino UNO R3 pin D1 (GPIO_AD_B1_06)
 | BOARD_InitARDUINO_UART | K10 | LPUART3    | RX          | LPUART3_RX  | default                                             | Arduino UNO R3 pin D0 (GPIO_AD_B1_07)
 | BOARD_InitUSER_LED     | F14 | GPIO1      | gpio_io, 09 | USER_LED    | Direction Output, GPIO initial state 1, mode PullUp | User LED (GPIO_AD_B0_09)

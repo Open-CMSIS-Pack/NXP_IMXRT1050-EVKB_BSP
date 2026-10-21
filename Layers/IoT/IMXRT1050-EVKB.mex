@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding= "UTF-8" ?>
-<configuration name="IMXRT1050-EVKB" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_15 http://mcuxpresso.nxp.com/XSD/mex_configuration_15.xsd" uuid="789fd1d3-821c-40a6-b04d-44ccc5a5d158" version="15" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_15" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<configuration name="IMXRT1050-EVKB" xsi:schemaLocation="http://mcuxpresso.nxp.com/XSD/mex_configuration_19 http://mcuxpresso.nxp.com/XSD/mex_configuration_19.xsd" uuid="789fd1d3-821c-40a6-b04d-44ccc5a5d158" version="19" xmlns="http://mcuxpresso.nxp.com/XSD/mex_configuration_19" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
    <common>
       <processor>MIMXRT1052xxxxB</processor>
       <package>MIMXRT1052DVL6B</package>
@@ -13,19 +13,19 @@
    </common>
    <preferences>
       <validate_boot_init_only>true</validate_boot_init_only>
-      <generate_extended_information>false</generate_extended_information>
       <generate_code_modified_registers_only>false</generate_code_modified_registers_only>
       <update_include_paths>true</update_include_paths>
+      <enable_parallel_routing>true</enable_parallel_routing>
       <generate_registers_defines>false</generate_registers_defines>
    </preferences>
    <tools>
-      <pins name="Pins" version="15.0" enabled="true" update_project_code="true">
+      <pins name="Pins" version="17.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/pin_mux.c" update_enabled="true"/>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/pin_mux.h" update_enabled="true"/>
          </generated_project_files>
          <pins_profile>
-            <processor_version>15.0.1</processor_version>
+            <processor_version>26.09.10</processor_version>
             <pin_labels>
                <pin_label pin_num="E3" pin_signal="GPIO_EMC_00" label="SEMC_D0" identifier="SEMC_D0"/>
                <pin_label pin_num="F3" pin_signal="GPIO_EMC_01" label="SEMC_D1" identifier="SEMC_D1"/>
@@ -109,7 +109,7 @@
                <pin_label pin_num="M11" pin_signal="GPIO_AD_B0_02" label="USB_OTG1_PWR/J24[2]"/>
                <pin_label pin_num="G11" pin_signal="GPIO_AD_B0_03" label="USB_OTG1_OC/J24[1]"/>
                <pin_label pin_num="F11" pin_signal="GPIO_AD_B0_04" label="CSI_PWDN/J35[17]/BOOT_MODE[0]" identifier="CSI_PWDN"/>
-               <pin_label pin_num="G14" pin_signal="GPIO_AD_B0_05" label="CAN_STBY/BOOT_MODE[1]/Flash_RST/U12[8]" identifier="CAN_STBY"/>
+               <pin_label pin_num="G14" pin_signal="GPIO_AD_B0_05" label="CAN_STBY/BOOT_MODE[1]/Flash_RST/U12[8]" identifier="CAN_STBY;SD_PWREN;SD1_PWREN"/>
                <pin_label pin_num="E14" pin_signal="GPIO_AD_B0_06" label="JTAG_TMS/J21[7]/SWD_DIO"/>
                <pin_label pin_num="F12" pin_signal="GPIO_AD_B0_07" label="JTAG_TCK/J21[9]/SWD_CLK"/>
                <pin_label pin_num="F13" pin_signal="GPIO_AD_B0_08" label="JTAG_MOD"/>
@@ -220,6 +220,9 @@
                <pin_label pin_num="K9" pin_signal="NGND_KEL0" label="GND"/>
                <pin_label pin_num="M10" pin_signal="VDD_SNVS_CAP" label="GND"/>
             </pin_labels>
+            <external_user_signals>
+               <properties/>
+            </external_user_signals>
             <power_domains/>
          </pins_profile>
          <functions_list>
@@ -768,6 +771,11 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.igpio" description="Pins initialization requires the IGPIO Driver in the project." problem_level="2" source="Pins:BOARD_InitUSDHCPins">
+                     <feature name="enabled" evaluation="equal" configuration="core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                </dependencies>
                <pins>
                   <pin peripheral="USDHC1" signal="usdhc_data, 3" pin_num="J2" pin_signal="GPIO_SD_B0_05">
@@ -776,7 +784,7 @@
                         <pin_feature name="pull_keeper_select" value="Pull"/>
                         <pin_feature name="pull_keeper_enable" value="Enable"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
@@ -785,7 +793,7 @@
                         <pin_feature name="pull_up_down_config" value="Pull_Up_47K_Ohm"/>
                         <pin_feature name="pull_keeper_select" value="Pull"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
@@ -794,7 +802,7 @@
                         <pin_feature name="pull_up_down_config" value="Pull_Up_47K_Ohm"/>
                         <pin_feature name="pull_keeper_select" value="Pull"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
@@ -803,7 +811,7 @@
                         <pin_feature name="pull_up_down_config" value="Pull_Up_47K_Ohm"/>
                         <pin_feature name="pull_keeper_select" value="Pull"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
@@ -812,7 +820,7 @@
                         <pin_feature name="pull_up_down_config" value="Pull_Up_47K_Ohm"/>
                         <pin_feature name="pull_keeper_select" value="Pull"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
                      </pin_features>
                   </pin>
@@ -820,8 +828,15 @@
                      <pin_features>
                         <pin_feature name="pull_keeper_enable" value="Disable"/>
                         <pin_feature name="speed" value="MHZ_200"/>
-                        <pin_feature name="drive_strength" value="R0"/>
+                        <pin_feature name="drive_strength" value="R0_6"/>
                         <pin_feature name="slew_rate" value="Fast"/>
+                     </pin_features>
+                  </pin>
+                  <pin peripheral="USDHC1" signal="usdhc_vselect" pin_num="C14" pin_signal="GPIO_B1_14"/>
+                  <pin peripheral="GPIO1" signal="gpio_io, 05" pin_num="G14" pin_signal="GPIO_AD_B0_05">
+                     <pin_features>
+                        <pin_feature name="identifier" value="SD1_PWREN"/>
+                        <pin_feature name="direction" value="OUTPUT"/>
                      </pin_features>
                   </pin>
                </pins>
@@ -969,13 +984,13 @@
             </function>
          </functions_list>
       </pins>
-      <clocks name="Clocks" version="13.0" enabled="true" update_project_code="true">
+      <clocks name="Clocks" version="20.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/clock_config.c" update_enabled="true"/>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/clock_config.h" update_enabled="true"/>
          </generated_project_files>
          <clocks_profile>
-            <processor_version>15.0.1</processor_version>
+            <processor_version>26.09.10</processor_version>
          </clocks_profile>
          <clock_configurations>
             <clock_configuration name="BOARD_BootClockRUN" id_prefix="" prefix_user_defined="false">
@@ -1071,10 +1086,10 @@
                   <clock_output id="SAI3_MCLK3.outFreq" value="30 MHz" locked="false" accuracy=""/>
                   <clock_output id="SEMC_CLK_ROOT.outFreq" value="75 MHz" locked="false" accuracy=""/>
                   <clock_output id="SPDIF0_CLK_ROOT.outFreq" value="30 MHz" locked="false" accuracy=""/>
-                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="352/3 MHz" locked="false" accuracy=""/>
+                  <clock_output id="TRACE_CLK_ROOT.outFreq" value="132 MHz" locked="false" accuracy=""/>
                   <clock_output id="UART_CLK_ROOT.outFreq" value="80 MHz" locked="false" accuracy=""/>
-                  <clock_output id="USDHC1_CLK_ROOT.outFreq" value="4752/29 MHz" locked="false" accuracy=""/>
-                  <clock_output id="USDHC2_CLK_ROOT.outFreq" value="4752/29 MHz" locked="false" accuracy=""/>
+                  <clock_output id="USDHC1_CLK_ROOT.outFreq" value="198 MHz" locked="false" accuracy=""/>
+                  <clock_output id="USDHC2_CLK_ROOT.outFreq" value="198 MHz" locked="false" accuracy=""/>
                </clock_outputs>
                <clock_settings>
                   <setting id="CCM.AHB_PODF.scale" value="1" locked="true"/>
@@ -1098,6 +1113,7 @@
                   <setting id="CCM_ANALOG.PLL2.num" value="0" locked="true"/>
                   <setting id="CCM_ANALOG.PLL2_BYPASS.sel" value="CCM_ANALOG.PLL2_OUT_CLK" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2_PFD0_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD0" locked="false"/>
+                  <setting id="CCM_ANALOG.PLL2_PFD0_DIV.scale" value="24" locked="true"/>
                   <setting id="CCM_ANALOG.PLL2_PFD1_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD1" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2_PFD2_BYPASS.sel" value="CCM_ANALOG.PLL2_PFD2" locked="false"/>
                   <setting id="CCM_ANALOG.PLL2_PFD2_DIV.scale" value="29" locked="false"/>
@@ -1129,13 +1145,13 @@
             </clock_configuration>
          </clock_configurations>
       </clocks>
-      <dcdx name="DCDx" version="3.0" enabled="true" update_project_code="true">
+      <dcdx name="DCDx" version="4.0" enabled="true" update_project_code="true">
          <generated_project_files>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/dcd.c" update_enabled="true"/>
             <file path="RTE/Board_Support/MIMXRT1052DVL6B/dcd.h" update_enabled="true"/>
          </generated_project_files>
          <dcdx_profile>
-            <processor_version>15.0.1</processor_version>
+            <processor_version>26.09.10</processor_version>
             <output_format>c_array</output_format>
          </dcdx_profile>
          <dcdx_configurations>

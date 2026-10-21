@@ -15,11 +15,11 @@
 
 /* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
 !!GlobalInfo
-product: Clocks v13.0
+product: Clocks v20.0
 processor: MIMXRT1052xxxxB
 package_id: MIMXRT1052DVL6B
 mcu_data: ksdk2_0
-processor_version: 15.0.1
+processor_version: 26.09.10
 board: IMXRT1050-EVKB
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 
@@ -84,10 +84,10 @@ outputs:
 - {id: SAI3_MCLK3.outFreq, value: 30 MHz}
 - {id: SEMC_CLK_ROOT.outFreq, value: 75 MHz}
 - {id: SPDIF0_CLK_ROOT.outFreq, value: 30 MHz}
-- {id: TRACE_CLK_ROOT.outFreq, value: 352/3 MHz}
+- {id: TRACE_CLK_ROOT.outFreq, value: 132 MHz}
 - {id: UART_CLK_ROOT.outFreq, value: 80 MHz}
-- {id: USDHC1_CLK_ROOT.outFreq, value: 4752/29 MHz}
-- {id: USDHC2_CLK_ROOT.outFreq, value: 4752/29 MHz}
+- {id: USDHC1_CLK_ROOT.outFreq, value: 198 MHz}
+- {id: USDHC2_CLK_ROOT.outFreq, value: 198 MHz}
 settings:
 - {id: CCM.AHB_PODF.scale, value: '1', locked: true}
 - {id: CCM.ARM_PODF.scale, value: '2', locked: true}
@@ -102,6 +102,8 @@ settings:
 - {id: CCM.SAI2_CLK_PRED.scale, value: '4', locked: true}
 - {id: CCM.SEMC_PODF.scale, value: '8', locked: true}
 - {id: CCM.TRACE_PODF.scale, value: '3', locked: true}
+- {id: CCM.USDHC1_CLK_SEL.sel, value: CCM_ANALOG.PLL2_PFD0_CLK}
+- {id: CCM.USDHC2_CLK_SEL.sel, value: CCM_ANALOG.PLL2_PFD0_CLK}
 - {id: CCM_ANALOG.AUDIO_DIV.scale, value: '1', locked: true}
 - {id: CCM_ANALOG.PLL1_BYPASS.sel, value: CCM_ANALOG.PLL1}
 - {id: CCM_ANALOG.PLL1_PREDIV.scale, value: '1', locked: true}
@@ -110,9 +112,10 @@ settings:
 - {id: CCM_ANALOG.PLL2.num, value: '0', locked: true}
 - {id: CCM_ANALOG.PLL2_BYPASS.sel, value: CCM_ANALOG.PLL2_OUT_CLK}
 - {id: CCM_ANALOG.PLL2_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD0}
+- {id: CCM_ANALOG.PLL2_PFD0_DIV.scale, value: '24'}
 - {id: CCM_ANALOG.PLL2_PFD1_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD1}
 - {id: CCM_ANALOG.PLL2_PFD2_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD2}
-- {id: CCM_ANALOG.PLL2_PFD2_DIV.scale, value: '29'}
+- {id: CCM_ANALOG.PLL2_PFD2_DIV.scale, value: '16'}
 - {id: CCM_ANALOG.PLL2_PFD3_BYPASS.sel, value: CCM_ANALOG.PLL2_PFD3}
 - {id: CCM_ANALOG.PLL3_BYPASS.sel, value: CCM_ANALOG.PLL3}
 - {id: CCM_ANALOG.PLL3_PFD0_BYPASS.sel, value: CCM_ANALOG.PLL3_PFD0}
@@ -232,13 +235,13 @@ void BOARD_BootClockRUN(void)
     /* Set USDHC1_PODF. */
     CLOCK_SetDiv(kCLOCK_Usdhc1Div, 1);
     /* Set Usdhc1 clock source. */
-    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 0);
+    CLOCK_SetMux(kCLOCK_Usdhc1Mux, 1);
     /* Disable USDHC2 clock gate. */
     CLOCK_DisableClock(kCLOCK_Usdhc2);
     /* Set USDHC2_PODF. */
     CLOCK_SetDiv(kCLOCK_Usdhc2Div, 1);
     /* Set Usdhc2 clock source. */
-    CLOCK_SetMux(kCLOCK_Usdhc2Mux, 0);
+    CLOCK_SetMux(kCLOCK_Usdhc2Mux, 1);
     /* In SDK projects, SDRAM (configured by SEMC) will be initialized in either debug script or dcd.
      * With this macro SKIP_SYSCLK_INIT, system pll (selected to be SEMC source clock in SDK projects) will be left unchanged.
      * Note: If another clock source is selected for SEMC, user may want to avoid changing that clock as well.*/
@@ -384,14 +387,15 @@ void BOARD_BootClockRUN(void)
     /* Init System PLL. */
     CLOCK_InitSysPll(&sysPllConfig_BOARD_BootClockRUN);
     /* Init System pfd0. */
-    CLOCK_InitSysPfd(kCLOCK_Pfd0, 27);
+    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24);
     /* Init System pfd1. */
     CLOCK_InitSysPfd(kCLOCK_Pfd1, 16);
     /* Init System pfd2. */
-    CLOCK_InitSysPfd(kCLOCK_Pfd2, 29);
+    CLOCK_InitSysPfd(kCLOCK_Pfd2, 16);
     /* Init System pfd3. */
     CLOCK_InitSysPfd(kCLOCK_Pfd3, 16);
 #endif
+    CLOCK_InitSysPfd(kCLOCK_Pfd0, 24); /* Added to allow clock reconfiguration for USDHC */
     /* In SDK projects, external flash (configured by FLEXSPI) will be initialized by dcd.
      * With this macro XIP_EXTERNAL_FLASH, usb1 pll (selected to be FLEXSPI clock source in SDK projects) will be left unchanged.
      * Note: If another clock source is selected for FLEXSPI, user may want to avoid changing that clock as well.*/
